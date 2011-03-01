@@ -1,38 +1,53 @@
 <html><head>
 <script type='application/javascript' src='jquery-1.5.1.js'></script>
 <script type='application/javascript' src='plots_raw.js'></script>
-<script type="application/javascript" src="canvaslayers.js"></script>
 <script type='application/javascript'>
 $(function() {
-    function toggle(container, plotNo){
+    function toggle(canvas, plotNo){
         paintedPlotCoords[plotNo] = paintedPlotCoords[plotNo] || {};
         var ppc = paintedPlotCoords[plotNo];
 
         if(ppc.layer){
-           ppc.layer.visible = !ppc.layer.visible;
+          $(ppc.layer).toggle();
         } else {
            var x = plotCoords[plotNo][0];
            var y = plotCoords[plotNo][1];
-           ppc.layer = initLayer(container, x, y); 
+           ppc.layer = initLayer(plotNo, canvas, x, y); 
         }
-        container.redraw();
     }
 
-    function initLayer(container, x, y){
-        var layer = new CanvasLayers.Layer(x-5, y-25, 30, 40);
+    function initLayer(plotNo, canvas, x, y){
+      config = {
+        height: 35,
+        width: 35
+      };
 
-        layer.onRender = function(layer, rect, context) {
-            context.fillStyle = "#000";
-            context.strokeRect(0,0,layer.getWidth(),layer.getHeight());
-        }
+      var layer = $("<canvas></canvas>");
+      layer.attr('id', 'canvas' + plotNo);
+      layer.attr('width',config.width);
+      layer.attr('height',config.height); 
+      layer.attr('style', [
+        "position:absolute",
+        "left:" + (plotNo < 10 ? x - 5 : x) + "px",
+        "top:" + (y-15) + "px",
+        "z-index: 1",
 
-        container.getChildren().add(layer);
-        return layer;
+        ].join(";")
+      );
+
+      $('#plotDisplay').append(layer);
+
+      var context = layer[0].getContext('2d');
+      context.arc(config.width / 2, config.height / 2,config.width / 2 - 1,0, 360);
+      context.stroke();
+      context.fillStyle = "rgba(200, 200, 0, 0.5)";
+      context.fill();
+
+      return layer;
     }
 
     var canvas = $('#ctxPlots')[0];
     var plotCoords = paintPlots(canvas);
-    var container = new CanvasLayers.Container(canvas, false);
     var paintedPlotCoords = {};
 
     for(pc in plotCoords){
@@ -42,18 +57,18 @@ $(function() {
     }
 
     $('input[name="plotCoords"]').click(function() {
-      toggle(container, $(this).attr('data-plotNo'));
+      toggle(canvas, $(this).attr('data-plotNo'));
     });
 });
 </script>
 </head>
 <body>
     <div style='float:right'>
-        <ul id='plotControls'>
+        <ul id='plotControls' style='list-style-type: none'>
         </ul>
     </div>
-    <div style='text-align:center;' width='80%' height='815'>
-        <canvas id='ctxPlots' width='745' height='813'>Your browser does not support the &lt;CANVAS&gt; element !</canvas>
+    <div id='plotDisplay' width='745' height='813'>
+        <canvas id='ctxPlots' style='z-index:0;' width='745' height='813'>Your browser does not support the &lt;CANVAS&gt; element !</canvas>
     </div>
 </body>
 </html>
