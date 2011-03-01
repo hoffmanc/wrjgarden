@@ -1,20 +1,38 @@
 <html><head>
-<script type='text/javascript' src='jquery-1.5.1.js'></script>
-<script type='text/javascript' src='plots_raw.js'></script>
-<script type='text/javascript'>
+<script type='application/javascript' src='jquery-1.5.1.js'></script>
+<script type='application/javascript' src='plots_raw.js'></script>
+<script type="application/javascript" src="canvaslayers.js"></script>
+<script type='application/javascript'>
 $(function() {
-    function toggle(canvas, plotNo){
-        var c = canvas.getContext('2d');
-        var x = plotCoords[plotNo][0];
-        var y = plotCoords[plotNo][1];
+    function toggle(container, plotNo){
+        paintedPlotCoords[plotNo] = paintedPlotCoords[plotNo] || {};
+        var ppc = paintedPlotCoords[plotNo];
 
-        c.fillStyle = paintedPlotCoords[plotNo] ? "#FFFFFF" : "#000000";
-        var rect = c.strokeRect(x-5, y-25, 30, 40);
-        paintedPlotCoords[plotNo] = !paintedPlotCoords[plotNo];
+        if(ppc.layer){
+           ppc.layer.visible = !ppc.layer.visible;
+        } else {
+           var x = plotCoords[plotNo][0];
+           var y = plotCoords[plotNo][1];
+           ppc.layer = initLayer(container, x, y); 
+        }
+        container.redraw();
     }
 
-    var canvas = document.getElementById('ctxPlots');
+    function initLayer(container, x, y){
+        var layer = new CanvasLayers.Layer(x-5, y-25, 30, 40);
+
+        layer.onRender = function(layer, rect, context) {
+            context.fillStyle = "#000";
+            context.strokeRect(0,0,layer.getWidth(),layer.getHeight());
+        }
+
+        container.getChildren().add(layer);
+        return layer;
+    }
+
+    var canvas = $('#ctxPlots')[0];
     var plotCoords = paintPlots(canvas);
+    var container = new CanvasLayers.Container(canvas, false);
     var paintedPlotCoords = {};
 
     for(pc in plotCoords){
@@ -24,7 +42,7 @@ $(function() {
     }
 
     $('input[name="plotCoords"]').click(function() {
-      toggle(canvas, $(this).attr('data-plotNo'));
+      toggle(container, $(this).attr('data-plotNo'));
     });
 });
 </script>
