@@ -1,0 +1,41 @@
+<html><head>
+<script type='text/javascript' src='jquery-1.5.1.js'></script>
+<script type='text/javascript' src='plots_raw.js'></script>
+<script type='text/javascript'>
+$(function() {
+    function toggle(canvas, plotNo){
+        var c = canvas.getContext('2d');
+        var x = plotCoords[plotNo][0];
+        var y = plotCoords[plotNo][1];
+
+        c.fillStyle = paintedPlotCoords[plotNo] ? "#FFFFFF" : "#000000";
+        var rect = c.strokeRect(x-5, y-25, 30, 40);
+        paintedPlotCoords[plotNo] = !paintedPlotCoords[plotNo];
+    }
+
+    var canvas = document.getElementById('ctxPlots');
+    var plotCoords = paintPlots(canvas);
+    var paintedPlotCoords = {};
+
+    for(pc in plotCoords){
+      var input = "<input id='plotCoords" + pc + "' name='plotCoords' type='checkbox' data-plotNo='" + pc + "'/>";
+      input += "<label for='plotCoords" + pc + "'>" + pc + "</label>";
+      $('#plotControls').append("<li>" + input + "</li>");
+    }
+
+    $('input[name="plotCoords"]').click(function() {
+      toggle(canvas, $(this).attr('data-plotNo'));
+    });
+});
+</script>
+</head>
+<body>
+    <div style='float:right'>
+        <ul id='plotControls'>
+        </ul>
+    </div>
+    <div style='text-align:center;' width='80%' height='815'>
+        <canvas id='ctxPlots' width='745' height='813'>Your browser does not support the &lt;CANVAS&gt; element !</canvas>
+    </div>
+</body>
+</html>
