@@ -1,5 +1,5 @@
 HoffmancGithubCom::Application.routes.draw do
-  resources :locations
+  resources :reservations
 
   resources :plots
 

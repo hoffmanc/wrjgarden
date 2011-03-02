@@ -1,0 +1,60 @@
+<%= form_for(@reservation) do |f| %>
+  <% if @reservation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+      <ul>
+      <% @reservation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fullname %><br />
+    <%= f.text_field :fullname %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br />
+    <%= f.select :location, Reservation::LOCATIONS %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div id='plotDisplay' width='745' height='813'>
+    <canvas id='ctxPlots' style='z-index:0;' width='745' height='813'>
+        <!-- replace with png image -->
+        Your browser does not support the &lt;CANVAS&gt; element !
+
+        <ul id='reservedPlots'>
+        <% @plots.select {|p| p.reserved?}.each do |p| %>
+            <li data-number='<%=p.number%>'><%=p.number%></li>
+        <% end %>
+        </ul>
+    </canvas>
+  </div>
+
+  <div class="field">
+    Plot(s) Desired
+    <ul id='plotControls'>
+    <% @plots.each do |plot| %>
+        <li class='<%= @plots.index(plot) % 2 == 0 ? "even" : "odd" %>'>
+        <% if plot.reserved? %>
+            <span class='taken'><%=plot.number%></span>
+        <% else %>
+            <label>
+                <%= check_box_tag 'reservation[plot_ids][]',plot.id,@reservation.plots.index(plot), 'data-number' => plot.number  %>
+                <%=plot.number%>
+            </label>
+        <% end %>
+        </li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
