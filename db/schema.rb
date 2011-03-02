@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110302131444) do
+ActiveRecord::Schema.define(:version => 20110302153145) do
 
   create_table "plots", :force => true do |t|
     t.string   "number"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20110302131444) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "x"
+    t.float    "y"
   end
 
 end

@@ -25,7 +25,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :number %>
+    Plot(s) Desired
     <ul id='plotControls' style='list-style-type: none'>
     <% @plots.each do |plot| %>
         <li>
@@ -33,8 +33,8 @@
             <span class='taken'><%=plot.number%></span>
         <% else %>
             <% num = plot.number %>
-            <input id='plot_number_<%=num%>' name='plot_number' type='checkbox' data-number='<%=num%>'/>";
-            <label for='plot_number_<%=num%>'><%=num%></label>";
+            <input id='plot_number_<%=num%>' name='plot_number' type='checkbox' data-number='<%=num%>'/>
+            <label for='plot_number_<%=num%>'><%=num%></label>
         <% end %>
         </li>
     <% end %>
