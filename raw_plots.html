@@ -59,6 +59,14 @@ $(function() {
     $('input[name="plotCoords"]').click(function() {
       toggle(canvas, $(this).attr('data-plotNo'));
     });
+
+    var restfulURL = "http://api.openkeyval.org/3acd39532de171d38023/";
+
+    $.ajax({
+        url: restfulURL + "registrants", 
+        dataType: "jsonp",
+
+    });
 });
 </script>
 </head>
