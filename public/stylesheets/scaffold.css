@@ -92,3 +92,7 @@ div#plotDisplay {
   width: 740px;
   padding: 0;
 }
+
+span.taken {
+  padding-left: 2em;
+}

@@ -1,0 +1,28 @@
+<div id='plotDisplay' width='745' height='813'>
+<canvas id='ctxPlots' style='z-index:0;' width='745' height='813'>
+    <%= image_tag 'plots.png', :alt => "Image of plots, starting at 1 in the centermost first quadrant, and spiraling
+    outward in ranks of 4, 12, 10, and 2" %>
+
+    <table id='plotCoords'>
+    <thead>
+    <tr><th>Number</th><th>X</th><th>Y</th></tr>
+    </thead>
+    <tbody>
+    <% for plot in @plots %>
+        <tr>
+            <td><%=plot.number%></td>
+            <td><%=plot.x%></td>
+            <td><%=plot.y%></td>
+        </tr>
+    <% end %>
+    </tbody>
+    </table>
+
+    <ul id='reservedPlots'>
+    <% @plots.select {|p| p.reserved?}.each do |p| %>
+        <li data-number='<%=p.number%>'><%=p.number%></li>
+    <% end %>
+    </ul>
+</canvas>
+</div>
+
