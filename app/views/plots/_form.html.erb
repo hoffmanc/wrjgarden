@@ -11,17 +11,43 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :number %><br />
-    <%= f.text_field :number %>
+  <div id='plotDisplay' width='745' height='813'>
+    <canvas id='ctxPlots' style='z-index:0;' width='745' height='813'>
+        <!-- replace with png image -->
+        Your browser does not support the &lt;CANVAS&gt; element !
+
+        <ul id='reservedPlots'>
+        <% @plots.select {|p| p.reserved?}.each do |p| %>
+            <li data-number='<%=p.number%>'><%=p.number%></li>
+        <% end %>
+        </ul>
+    </canvas>
   </div>
+
+  <div class="field">
+    <%= f.label :number %>
+    <ul id='plotControls' style='list-style-type: none'>
+    <% @plots.each do |plot| %>
+        <li>
+        <% if plot.reserved? %>
+            <span class='taken'><%=plot.number%></span>
+        <% else %>
+            <% num = plot.number %>
+            <input id='plot_number_<%=num%>' name='plot_number' type='checkbox' data-number='<%=num%>'/>";
+            <label for='plot_number_<%=num%>'><%=num%></label>";
+        <% end %>
+        </li>
+    <% end %>
+    </ul>
+  </div>
+
   <div class="field">
     <%= f.label :fullname %><br />
     <%= f.text_field :fullname %>
   </div>
   <div class="field">
     <%= f.label :location %><br />
-    <%= f.text_field :location %>
+    <%= f.select :location, Plot::LOCATIONS %>
   </div>
   <div class="field">
     <%= f.label :email %><br />

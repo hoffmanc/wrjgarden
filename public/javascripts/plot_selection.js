@@ -1,7 +1,3 @@
-<html><head>
-<script type='application/javascript' src='jquery-1.5.1.js'></script>
-<script type='application/javascript' src='plots_raw.js'></script>
-<script type='application/javascript'>
 $(function() {
     function toggle(canvas, plotNo){
         paintedPlotCoords[plotNo] = paintedPlotCoords[plotNo] || {};
@@ -50,33 +46,7 @@ $(function() {
     var plotCoords = paintPlots(canvas);
     var paintedPlotCoords = {};
 
-    for(pc in plotCoords){
-      var input = "<input id='plotCoords" + pc + "' name='plotCoords' type='checkbox' data-plotNo='" + pc + "'/>";
-      input += "<label for='plotCoords" + pc + "'>" + pc + "</label>";
-      $('#plotControls').append("<li>" + input + "</li>");
-    }
-
-    $('input[name="plotCoords"]').click(function() {
-      toggle(canvas, $(this).attr('data-plotNo'));
-    });
-
-    var restfulURL = "http://api.openkeyval.org/3acd39532de171d38023/";
-
-    $.ajax({
-        url: restfulURL + "registrants", 
-        dataType: "jsonp",
-
+    $('input[name="plot_number"]').click(function() {
+      toggle(canvas, $(this).attr('data-number'));
     });
 });
-</script>
-</head>
-<body>
-    <div style='float:right'>
-        <ul id='plotControls' style='list-style-type: none'>
-        </ul>
-    </div>
-    <div id='plotDisplay' width='745' height='813'>
-        <canvas id='ctxPlots' style='z-index:0;' width='745' height='813'>Your browser does not support the &lt;CANVAS&gt; element !</canvas>
-    </div>
-</body>
-</html>

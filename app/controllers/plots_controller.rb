@@ -25,6 +25,7 @@ class PlotsController < ApplicationController
   # GET /plots/new.xml
   def new
     @plot = Plot.new
+    @plots = Plot.all
 
     respond_to do |format|
       format.html # new.html.erb
