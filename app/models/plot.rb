@@ -1,10 +1,7 @@
 class Plot < ActiveRecord::Base
-    LOCATIONS = ["Ratcliffe Park Neighborhood", "Outside Ratcliffe Park Area"]
-
-    validates_inclusion_of :location, :in => LOCATIONS
-    validates :email, :presence => true, :email => true
+    belongs_to :reservation
 
     def reserved?
-        return !email.blank?
+        return !reservation.blank?
     end
 end

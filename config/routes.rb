@@ -1,4 +1,6 @@
 HoffmancGithubCom::Application.routes.draw do
+  resources :reservations
+
   resources :plots
 
   # The priority is based upon order of creation:

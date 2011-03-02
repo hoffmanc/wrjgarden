@@ -7,5 +7,9 @@ class AddXAndYToPlot < ActiveRecord::Migration
   end
 
   def self.down
+    change_table :plots do |t|
+        t.remove :x
+        t.remove :y
+    end
   end
 end

@@ -46,7 +46,7 @@ $(function() {
     var plotCoords = paintPlots(canvas);
     var paintedPlotCoords = {};
 
-    $('input[name="plot_number"]').click(function() {
+    $('input[name="reservation[plot_ids][]"]').click(function() {
       toggle(canvas, $(this).attr('data-number'));
     });
 });

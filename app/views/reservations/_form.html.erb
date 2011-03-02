@@ -1,16 +1,28 @@
-<%= form_for(@plot) do |f| %>
-  <% if @plot.errors.any? %>
+<%= form_for(@reservation) do |f| %>
+  <% if @reservation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@plot.errors.count, "error") %> prohibited this plot from being saved:</h2>
+      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
 
       <ul>
-      <% @plot.errors.full_messages.each do |msg| %>
+      <% @reservation.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
+  <div class="field">
+    <%= f.label :fullname %><br />
+    <%= f.text_field :fullname %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br />
+    <%= f.select :location, Reservation::LOCATIONS %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
   <div id='plotDisplay' width='745' height='813'>
     <canvas id='ctxPlots' style='z-index:0;' width='745' height='813'>
         <!-- replace with png image -->
@@ -26,33 +38,22 @@
 
   <div class="field">
     Plot(s) Desired
-    <ul id='plotControls' style='list-style-type: none'>
+    <ul id='plotControls'>
     <% @plots.each do |plot| %>
-        <li>
+        <li class='<%= @plots.index(plot) % 2 == 0 ? "even" : "odd" %>'>
         <% if plot.reserved? %>
             <span class='taken'><%=plot.number%></span>
         <% else %>
-            <% num = plot.number %>
-            <input id='plot_number_<%=num%>' name='plot_number' type='checkbox' data-number='<%=num%>'/>
-            <label for='plot_number_<%=num%>'><%=num%></label>
+            <label>
+                <%= check_box_tag 'reservation[plot_ids][]',plot.id,@reservation.plots.index(plot), 'data-number' => plot.number  %>
+                <%=plot.number%>
+            </label>
         <% end %>
         </li>
     <% end %>
     </ul>
   </div>
 
-  <div class="field">
-    <%= f.label :fullname %><br />
-    <%= f.text_field :fullname %>
-  </div>
-  <div class="field">
-    <%= f.label :location %><br />
-    <%= f.select :location, Plot::LOCATIONS %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -10,17 +10,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110302153145) do
+ActiveRecord::Schema.define(:version => 20110302170523) do
 
   create_table "plots", :force => true do |t|
     t.string   "number"
-    t.string   "fullname"
-    t.string   "location"
-    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "x"
     t.float    "y"
+    t.integer  "reservation_id"
+  end
+
+  create_table "reservations", :force => true do |t|
+    t.string   "fullname"
+    t.string   "email"
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

@@ -6,6 +6,10 @@ body, p, ol, ul, td {
   line-height: 18px;
 }
 
+body {
+  background-color: blue;
+}
+
 pre {
   background-color: #eee;
   padding: 10px;
@@ -53,4 +57,38 @@ div.field, div.actions {
 #error_explanation ul li {
   font-size: 12px;
   list-style: square;
+}
+
+div.actions {
+  clear: left;
+  padding-top: 1em;
+}
+
+ul#plotControls {
+    width: 300px;
+  list-style-type: none;
+}
+
+ul#plotControls li {
+  float: left;
+  width: 5em;
+}
+
+ul#plotControls li.even {
+  background-color: #ddd;
+}
+
+div#content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 773px;
+  padding: 3em;
+  background-color: white;
+}
+
+div#plotDisplay {
+  margin-left: auto;
+  margin-right: auto;
+  width: 740px;
+  padding: 0;
 }
