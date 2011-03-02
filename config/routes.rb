@@ -1,6 +1,4 @@
 HoffmancGithubCom::Application.routes.draw do
-  resources :locations
-
   resources :plots
 
   # The priority is based upon order of creation:
