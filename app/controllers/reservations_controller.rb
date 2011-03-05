@@ -27,4 +27,14 @@ class ReservationsController < ApplicationController
       end
     end
   end
+
+  def show
+    @reservation = Reservation.find(params[:id])
+    @plots = Plot.all
+    respond_to do |format|
+        format.html
+        format.xml  { render :xml => @reservation }
+    end
+  end
+
 end

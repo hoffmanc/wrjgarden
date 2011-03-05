@@ -1,52 +1,21 @@
 $(function() {
-    function toggle(canvas, plotNo){
-        paintedPlotCoords[plotNo] = paintedPlotCoords[plotNo] || {};
-        var ppc = paintedPlotCoords[plotNo];
+    var canvasOpts = { 
+        width: 740,
+        height: 805
+    };
+    var canvas = $('#ctxPlots')
+        .attr('width', canvasOpts.width)
+        .attr('height', canvasOpts.height);
 
-        if(ppc.layer){
-          $(ppc.layer).toggle();
-        } else {
-           var x = plotCoords[plotNo][0];
-           var y = plotCoords[plotNo][1];
-           ppc.layer = initLayer(plotNo, canvas, x, y); 
-        }
-    }
+    canvas.parent()
+        .attr('width', canvasOpts.width + 5)
+        .attr('height', canvasOpts.height + 5);
 
-    function initLayer(plotNo, canvas, x, y){
-      config = {
-        height: 35,
-        width: 35
-      };
-
-      var layer = $("<canvas></canvas>");
-      layer.attr('id', 'canvas' + plotNo);
-      layer.attr('width',config.width);
-      layer.attr('height',config.height); 
-      layer.attr('style', [
-        "position:absolute",
-        "left:" + (plotNo < 10 ? x - 5 : x) + "px",
-        "top:" + (y-15) + "px",
-        "z-index: 1",
-
-        ].join(";")
-      );
-
-      $('#plotDisplay').append(layer);
-
-      var context = layer[0].getContext('2d');
-      context.arc(config.width / 2, config.height / 2,config.width / 2 - 1,0, 360);
-      context.stroke();
-      context.fillStyle = "rgba(200, 200, 0, 0.5)";
-      context.fill();
-
-      return layer;
-    }
-
-    var canvas = $('#ctxPlots')[0];
-    var plotCoords = paintPlots(canvas);
+    var plotCoords = paintPlots(canvas[0], canvasOpts);
     var paintedPlotCoords = {};
 
     $('input[name="reservation[plot_ids][]"]').click(function() {
-      toggle(canvas, $(this).attr('data-number'));
+      toggle(canvas[0], $(this).attr('data-number'), plotCoords, paintedPlotCoords);
     });
 });
+
