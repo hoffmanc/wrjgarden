@@ -4,4 +4,8 @@ class Plot < ActiveRecord::Base
     def reserved?
         return !reservation.blank?
     end
+
+    def status
+        return reserved? ? "reserved" : "available"
+    end
 end

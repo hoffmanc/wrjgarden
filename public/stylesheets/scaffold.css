@@ -93,6 +93,20 @@ div#plotDisplay {
   padding: 0;
 }
 
+canvas#ctxPlots {
+  z-index: 0;
+}
+
+canvas#ctxPlots img {
+  width: 740px;
+}
+
+canvas.plot {
+  z-index: 1;
+  display: none;
+}
+
 span.taken {
   padding-left: 2em;
 }
+

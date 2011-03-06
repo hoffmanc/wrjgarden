@@ -560,23 +560,18 @@ function paintPlots(canvas) {
     c.fillText("S", 363.61438, 772.0827);
     c.fillText("W", 6.9925861, 446.3382);
     c.font = "normal normal 20px Bitstream Vera Sans";
-    var plotCoords = {};
-    $.each($('table#plotCoords tbody tr'), function(idx, tr){
-        var key = $('td:eq(0)', tr).text();
-        var x = $('td:eq(1)', tr).text();
-        var y = $('td:eq(2)', tr).text();
+    $.each($('canvas.plot'), function(idx, canvas){
+        c.fillText(
+            $(canvas).attr('data-number'),
+            $(canvas).attr('data-x'),
+            $(canvas).attr('data-y')
+        );
 
-        plotCoords[key] = [x,y];
+        if($(canvas).hasClass('reserved')){
+            initPlot(canvas, "rgba(200, 0, 0, 0.5)")
+        }
     });
-    for(var pc in plotCoords){
-        c.fillText(pc, plotCoords[pc][0], plotCoords[pc][1]);
-    }
 
-    $.each($('ul#reservedPlots li'), function(idx, li){
-        var plotNo = $(li).attr('data-number');
-        var plotCoord = plotCoords[plotNo];
-        initLayer(plotNo, canvas, plotCoord[0], plotCoord[1], "rgba(200, 0, 0, 0.5)")
-    });
     c.setTransform(1.0, 0.0, 0.0, 1.0, 0.0, 0.0);
     c.font = "normal normal 40px Bitstream Vera Sans";
     c.fillText("", 246.33154, 479.28137);

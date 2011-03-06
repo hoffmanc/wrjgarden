@@ -1,28 +1,15 @@
-function initLayer(plotNo, canvas, x, y, fillStyle){
+function initPlot(canvas, fillStyle){
   config = {
-    height: $('canvas').attr('height'),
-    width: $('canvas').attr('width'),
-    radius: 35
+    radius: 35,
+    circlePositionX: $(canvas).attr('data-x'),
+    circlePositionY: $(canvas).attr('data-y')
   };
 
-  var layer = $("<canvas></canvas>");
-  layer.attr('id', 'canvas' + plotNo);
-  layer.attr('width',config.width);
-  layer.attr('height',config.height); 
-  layer.attr('style', [
-    "position: absolute",
-    "left:" + canvas.offsetLeft + (plotNo < 10 ? x - 5 : x) + "px",
-    "top:" + canvas.offsetTop + (y-15) + "px",
-    "z-index: 1"
-  ].join(";"));
-
-  $('#plotDisplay').append(layer);
-
-  var context = layer[0].getContext('2d');
+  var context = canvas.getContext('2d');
   context.arc(
-    config.width + config.radius / 2, 
-    config.height + config.radius / 2, 
-    config.width / 2 - 1, 
+    config.circlePositionX + config.radius / 2, 
+    config.circlePositionY + config.radius / 2, 
+    config.radius, 
     0, 360
   );
   context.lineWidth = "2.5";
@@ -30,10 +17,11 @@ function initLayer(plotNo, canvas, x, y, fillStyle){
   context.fillStyle = fillStyle || "rgba(200, 200, 0, 0.5)";
   context.fill();
 
-  return layer;
+  return canvas;
 }
 
-function toggle(canvas, plotNo, paintedPlotCoords){
+function toggle(canvas, plotCoords, paintedPlotCoords){
+    var plotNo = $('canvas').attr('data-number');
     paintedPlotCoords[plotNo] = paintedPlotCoords[plotNo] || {};
     var ppc = paintedPlotCoords[plotNo];
 
@@ -42,6 +30,6 @@ function toggle(canvas, plotNo, paintedPlotCoords){
     } else {
        var x = plotCoords[plotNo][0];
        var y = plotCoords[plotNo][1];
-       ppc.layer = initLayer(plotNo, canvas, x, y); 
+       ppc.layer = initPlot(plotNo, canvas, x, y); 
     }
 }
