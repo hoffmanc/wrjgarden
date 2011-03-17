@@ -1,12 +1,5 @@
 <div id='plotDisplay'>
-<canvas id='ctxPlots' width='800' height='820'>
     <%= image_tag 'plots.png', :alt => "Image of plots, starting at 1 in the centermost first quadrant, and spiraling
     outward, clockwise, in ranks of 4, 12, 10, and 2" %>
-</canvas>
-<% for plot in @plots %>
-    <canvas id='plot<%=plot.number%>' class='plot <%= plot.status %>' data-number='<%= plot.number %>' data-x='<%=
-    plot.x %>' data-y='<%= plot.y %>' width='800' height='820'>
-    </canvas>
-<% end %>
 </div>
 
