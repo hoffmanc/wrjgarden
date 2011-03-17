@@ -3,7 +3,7 @@ class ReservationsController < ApplicationController
   # GET /reservations/new.xml
   def new
     @reservation = Reservation.new
-    @plots = Plot.all
+    @plots = Plot.order('plots.number')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -30,7 +30,7 @@ class ReservationsController < ApplicationController
 
   def show
     @reservation = Reservation.find(params[:id])
-    @plots = Plot.all
+    @plots = Plot.order('plots.number')
     respond_to do |format|
         format.html
         format.xml  { render :xml => @reservation }
