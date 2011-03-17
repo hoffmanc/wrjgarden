@@ -30,7 +30,7 @@
     Plot(s) Desired
     <ul id='plotControls'>
     <% @plots.each do |plot| %>
-        <li class='<%= @plots.index(plot) % 2 == 0 ? "even" : "odd" %>'>
+        <li class='<%= @plots.index(plot) % 2 == 0 ? "even" : "odd" %><%= @plots.index(plot) % 4 == 0 ? " newrow" : ""%>'>
         <% if plot.reserved? %>
             <span class='taken' title='already reserved'><%=plot.number%></span>
         <% else %>

@@ -21,7 +21,7 @@ class ReservationsController < ApplicationController
         format.html { redirect_to(@reservation, :notice => 'Plot was successfully reserved.') }
         format.xml  { render :xml => @reservation, :status => :created, :location => @reservation }
       else
-        @plots = Plot.all
+        @plots = Plot.order('plots.number')
         format.html { render :action => "new" }
         format.xml  { render :xml => @reservation.errors, :status => :unprocessable_entity }
       end

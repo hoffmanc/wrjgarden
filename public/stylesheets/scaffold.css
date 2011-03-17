@@ -72,6 +72,11 @@ ul#plotControls {
 ul#plotControls li {
   float: left;
   width: 5em;
+  margin: 0;
+}
+
+ul#plotControls li.newrow {
+  clear: left;
 }
 
 ul#plotControls li.even {
