@@ -115,3 +115,11 @@ span.taken {
   padding-left: 2em;
 }
 
+table#reservations {
+  border-collapse: collapse;
+}
+
+table#reservations td { 
+  border: 1px solid black;
+  padding: .5em;
+}

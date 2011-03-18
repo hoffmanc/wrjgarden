@@ -37,4 +37,12 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def index
+    @reservations = Reservation.order('reservations.created_at')
+    respond_to do |format|
+        format.html { render :action => "list" }
+        format.xml  { render :xml => @reservations }
+    end
+  end   
+
 end

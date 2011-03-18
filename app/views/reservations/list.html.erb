@@ -1,0 +1,22 @@
+<h1>Reservations</h1>
+
+<table id='reservations'>
+<thead>
+<tr>
+<th>Created At</th>
+<th>Fullname</th>
+<th>Email</th>
+<th>Plots</th>
+</tr>
+</thead>
+<tbody>
+<% for r in @reservations %>
+    <tr>
+        <td><%= r.created_at %></td>
+        <td><%= r.fullname %></td>
+        <td><%= r.email %></td>
+        <td><%= r.plots.collect(&:number).join(", ") %></td>
+    </tr>
+<% end %>
+</tbody>
+</table>
